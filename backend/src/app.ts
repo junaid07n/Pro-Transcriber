@@ -11,7 +11,7 @@ const app: Express = express();
 app.use(helmet());
 app.use(cors({
   origin: process.env.NODE_ENV === "production"
-    ? process.env.ALLOWED_ORIGINS?.split(",") ?? true
+    ? (process.env.ALLOWED_ORIGINS?.split(",") ?? [])
     : true,
   credentials: true,
 }));

@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 export type ToastVariant = "default" | "destructive";
 
@@ -29,17 +29,12 @@ export function toast(t: Omit<Toast, "id">) {
 export function useToast() {
   const [state, setState] = useState<Toast[]>(toasts);
 
-  const subscribe = useCallback((listener: (toasts: Toast[]) => void) => {
-    listeners.push(listener);
+  useEffect(() => {
+    listeners.push(setState);
     return () => {
-      listeners = listeners.filter((l) => l !== listener);
+      listeners = listeners.filter((l) => l !== setState);
     };
   }, []);
-
-  useState(() => {
-    const unsub = subscribe(setState);
-    return unsub;
-  });
 
   return {
     toasts: state,

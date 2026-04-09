@@ -75,7 +75,7 @@ router.post("/playlist/info", transcribeLimiter, async (req: Request, res: Respo
     res.json(info);
   } catch (err) {
     logger.error({ err, playlistId }, "Error fetching playlist info");
-    res.status(500).json({ error: `Failed to fetch playlist info: ${err instanceof Error ? err.message : String(err)}` });
+    res.status(500).json({ error: "Failed to fetch playlist info" });
   }
 });
 
@@ -143,7 +143,7 @@ router.post("/playlist", transcribeLimiter, async (req: Request, res: Response) 
     });
   } catch (err) {
     logger.error({ err, playlistId }, "Error transcribing playlist");
-    res.status(500).json({ error: `Failed to transcribe playlist: ${err instanceof Error ? err.message : String(err)}` });
+    res.status(500).json({ error: "Failed to transcribe playlist" });
   }
 });
 
