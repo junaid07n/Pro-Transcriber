@@ -134,8 +134,8 @@ export default function Playlist() {
     },
   });
 
-  // Limit to first 20 videos per request to avoid long-running operations
-  const MAX_VIDEOS = 20;
+  // Limit to first 50 videos per request (matches backend max) to avoid long-running operations
+  const MAX_VIDEOS = 50;
   const transcribeMutation = useMutation({
     mutationFn: (u: string) => transcribePlaylist(u, MAX_VIDEOS),
     onSuccess: (data) => {
