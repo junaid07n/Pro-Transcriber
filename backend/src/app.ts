@@ -9,21 +9,19 @@ import router from "./routes/index.js";
 const app: Express = express();
 
 app.use(helmet());
-const allowedOrigins =
+// In development, allow all origins. In production, restrict to ALLOWED_ORIGINS.
+const corsOrigin: cors.CorsOptions["origin"] =
   process.env.NODE_ENV === "production"
-    ? (process.env.ALLOWED_ORIGINS?.split(",").map((o) => o.trim()).filter(Boolean) ?? [])
-    : null;
+    ? (() => {
+        const origins = (process.env.ALLOWED_ORIGINS ?? "")
+          .split(",")
+          .map((o) => o.trim())
+          .filter(Boolean);
+        return origins.length > 0 ? origins : false;
+      })()
+    : (_origin: string | undefined, cb: (err: Error | null, allow?: boolean) => void) => cb(null, true);
 
-app.use(
-  cors({
-    origin: allowedOrigins === null
-      ? true
-      : allowedOrigins.length > 0
-        ? allowedOrigins
-        : false,
-    credentials: true,
-  })
-);
+app.use(cors({ origin: corsOrigin, credentials: true }));
 app.use(globalLimiter);
 app.use(
   pinoHttp({
