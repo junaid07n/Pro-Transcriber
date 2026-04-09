@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "$BACKEND_URL/api/$1",
+      "comment": "Set BACKEND_URL env var in Vercel project settings to your backend service URL (e.g. https://your-api.railway.app)"
+    },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
