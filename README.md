@@ -1,5 +1,3 @@
-# Pro-Transcriber
-You can Transcribe all youtube vedios including invidual links and as well as complte playlist
 # YouTube Transcriber — Complete Source Code
 
 ## Project Structure
@@ -67,4 +65,3 @@ yt-transcriber-export/
 2. Start backend: `cd backend && pnpm dev` (runs on port 8080)
 3. Start frontend: `cd frontend && PORT=5000 BASE_PATH=/ pnpm dev`
 4. Open: http://localhost:5000
-
