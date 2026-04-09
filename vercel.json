@@ -8,7 +8,11 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "http://YOUR_BACKEND_URL/api/$1" },
+    {
+      "src": "/api/(.*)",
+      "dest": "$BACKEND_URL/api/$1",
+      "comment": "Set BACKEND_URL env var in Vercel project settings to your backend service URL (e.g. https://your-api.railway.app)"
+    },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }

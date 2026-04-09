@@ -9,12 +9,21 @@ import router from "./routes/index.js";
 const app: Express = express();
 
 app.use(helmet());
-app.use(cors({
-  origin: process.env.NODE_ENV === "production"
-    ? (process.env.ALLOWED_ORIGINS?.split(",") ?? [])
-    : true,
-  credentials: true,
-}));
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? (process.env.ALLOWED_ORIGINS?.split(",").map((o) => o.trim()).filter(Boolean) ?? [])
+    : null;
+
+app.use(
+  cors({
+    origin: allowedOrigins === null
+      ? true
+      : allowedOrigins.length > 0
+        ? allowedOrigins
+        : false,
+    credentials: true,
+  })
+);
 app.use(globalLimiter);
 app.use(
   pinoHttp({
